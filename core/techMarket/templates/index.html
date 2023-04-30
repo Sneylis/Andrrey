@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{%load static%}
+
+{%block title%}Каталог{%endblock%}
+
+{%block aside%}
+{%if group%}
+{%for g in group%}
+<div>
+    <ul class="catalog">
+        <li><a><h1>{{g.gr}}</h1></a></li>
+        {%for c in g.category_set.all%}
+        <ul>
+        <li><a href="{%url 'techMarket:showCategory' c.id %}"><h2>{{c.cat}}</h2></a></li>
+        </ul>
+        {%endfor%}
+
+    </ul>
+
+</div>
+{%endfor%}
+{%endif%}
+{%endblock%}
+
+
+{%block content%}
+{%for u in unit%}
+<div class="unit">
+    <div class="ph"><img src="{{u.photo.url}}"></div>
+    <div class="about">
+        <h1>{{u.title}}</h1>
+        <p>Описание<br>{{u.about |truncatewords:30}}</p>
+    <!--    <p>характеристики<br>{{u.characters}}</p>-->
+        <h2>{{u.price}}₽</h2>
+        <a href="{%url 'techMarket:ShowUnit' u.id%}">Смотреть</a>
+
+        <a href="{%url 'techMarket:delUnit' u.id%}">удалить</a>
+        <a href="{%url 'techMarket:updUnit' u.id%}"><img class="updUnit" class="logo" src="{% static 'techMarket/img/upd.png' %}"></a>
+    </div>
+</div>
+{%endfor%}
+{%endblock%}

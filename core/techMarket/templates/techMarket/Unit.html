@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{%load static%}
+
+{%block title%}Каталог{%endblock%}
+
+{%block aside%}
+{%if group%}
+{%for g in group%}
+<div>
+    <ul class="catalog">
+        <li><a><h1>{{g.gr}}</h1></a></li>
+        {%for c in g.category_set.all%}
+        <ul>
+        <li><a href="{%url 'techMarket:showCategory' c.id %}"><h2>{{c.cat}}</h2></a></li>
+        </ul>
+        {%endfor%}
+
+    </ul>
+
+</div>
+{%endfor%}
+{%endif%}
+{%endblock%}
+
+
+{%block content%}
+{%for u in unit%}
+<div>
+  <div><h1>{{u.title}}</h1></div>
+  <div><img src="{{u.photo.url}}"></div>
+  <div>
+    <h2>{{u.price}}</h2>
+    <p>{{u.about}}</p>
+    <p>{{u.characters}}</p>
+  </div>
+</div>
+{%endfor%}
+{%endblock%}

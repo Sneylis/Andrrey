@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{%load static%}
+
+{%block title%}Моя страница {%endblock%}
+
+{%block content%}
+<div>
+
+</div>
+<div>
+    <div><img src="{{request.user.profile.avatar.url}}"></div>
+    <h1>{{request.user.username}}</h1>
+    <ul>
+<!--        <li><a href="{%url 'techMarket:updPass' request.user.id%}">Сменить пароль</a></li>-->
+        <li><a href="{%url 'techMarket:exit'%}">Выйти из аккаунта</a></li>
+    </ul>
+</div>
+{%endblock%}
