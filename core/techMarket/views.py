@@ -113,3 +113,16 @@ class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
 
     def get_success_url(self):
         return reverse_lazy('profile_detail', kwargs={'slug': self.request.user.profile.slug})
+
+
+def post_search(request):
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            u = Unit.objects.filter(title__icontains=form.cleaned_data['query'])
+    group = Group.objects.all()
+    form = SearchForm
+    paginator = Paginator(u, 5)
+    page_num = request.GET.get('page')
+    page_obj = paginator.get_page(page_num)
+    return render(request, 'library_home.html', {'form':form,'group': group, 'page_obj': page_obj})

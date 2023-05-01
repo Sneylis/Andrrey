@@ -17,5 +17,6 @@ urlpatterns = [
     path('exit/',authViews.LogoutView.as_view(next_page='index'),name='exit'),
     path('about/',views.about,name='About'),
     path('password-change/', views.UserPasswordChangeView.as_view(), name='password_change'),
+    path('search/',views.post_search,name='findBook'),
 
 ]

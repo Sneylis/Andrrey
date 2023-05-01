@@ -24,13 +24,27 @@
 
 
 {%block content%}
+<!-- <form class='add' action="{% url 'techMarket:findBook'%}" method="post" enctype="multipart/form-data">                 &lt;!&ndash;тут нужен дизайн дива, работает тк форма наследуеться, для дизайна полей я сделал тебе Form_label&ndash;&gt;-->
+<!--    {% csrf_token %}-->
+
+<!--    <div class="div_for_error">{{form.non_field_errors}}</div>-->
+<!--    <div class="search">-->
+<!--    {% for f in form%}-->
+<!--        <p><label class="form_label" for="{{f.id_for_label}}">{{f.label}}: </label>{{f}}</p>-->
+<!--        <div class="div_for_error">{{f.errors}}</div>-->
+<!--    {%endfor%}-->
+
+<!--    <button class="buttonsch" type="submit">Поиск</button>-->
+<!--    </div>-->
+<!--</form>-->
+
 {%for u in page_obj%}
 <div class="unit">
     <div class="ph"><img src="{{u.photo.url}}"></div>
     <div class="about">
         <h1>{{u.title}}</h1>
         <p>Описание<br>{{u.about |truncatewords:30}}</p>
-    <!--    <p>характеристики<br>{{u.characters}}</p>-->
+        <p>характеристики<br>{{u.characters}}</p>
         <h2>{{u.price}}₽</h2>
         <a href="{%url 'techMarket:ShowUnit' u.id%}">Смотреть</a>
 

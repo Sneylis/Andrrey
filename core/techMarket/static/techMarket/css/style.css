@@ -54,29 +54,39 @@ body{
     padding-bottom: 30px;
     border:5px solid #444241;
     margin-right: auto;
-/*    position: relative;*/
+
 }
 
 .about{
     padding-left: 10px;
 }
 
-/*.ph{
-     position: absolute;
-    left: 0;
-    top: 0;
-    width: 40%;
-    margin: 0; padding: 0;
-    background: #303030;
-}*/
+
 
 .updUnit{
     width: 30px;
     height: 30px;
-}logo.png
-upd.png
+}
 
 .logo {
     width:120px;
     height:120px;
+}
+
+
+.search{
+    margin-left: 28%;
+    display: flex;
+    background: #f7eed7;
+    padding: 10px;
+    width:300px;
+    border: 2px solid #dbd3bf;
+    border-bottom-left-radius:5px;
+    border-bottom-right-radius: 5px;
+}
+
+.buttonsch{
+    margin-left: 5px;
+    border: 2px solid #dbd3bf;
+    border-radius: 5px;
 }

@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from .models import Unit,Profile
 from django.contrib.auth.forms import SetPasswordForm
 
+class SearchForm(forms.Form):
+    query = forms.CharField(label='поиск')
 
 class UserPasswordChangeForm(SetPasswordForm):
     def __init__(self, *args, **kwargs):
