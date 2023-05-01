@@ -24,7 +24,7 @@
 
 
 {%block content%}
-{%for u in unit%}
+{%for u in page_obj%}
 <div class="unit">
     <div class="ph"><img src="{{u.photo.url}}"></div>
     <div class="about">
@@ -39,4 +39,17 @@
     </div>
 </div>
 {%endfor%}
+
+<footer class="pagination">
+    <nav class="paginator">
+        <ul class="paginator">
+            {%for p in page_obj.paginator.page_range%}
+            <li>
+                <a href="?page={{p}}">{{p}}</a>
+            </li>
+            {%endfor%}
+        </ul>
+    </nav>
+</footer>
+
 {%endblock%}

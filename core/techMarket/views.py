@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .models import *
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.paginator import Paginator
 from .utils import DataMixin
 from django.views.generic import CreateView
 from .forms import *
@@ -16,12 +16,11 @@ from django.contrib.auth.views import PasswordChangeView
 def index(request):
     unit = Unit.objects.all()
     gr = Group.objects.all()
+    paginator = Paginator(unit, 15)  # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'index.html', {'page_obj': page_obj,'group':gr})
 
-    context = {
-        'unit':unit,
-        'group':gr,
-    }
-    return render(request,'index.html',context)
 
 def about(request):
     return render(request,'techMarket/about.html')
