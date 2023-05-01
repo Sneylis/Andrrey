@@ -44,7 +44,6 @@
     <div class="about">
         <h1>{{u.title}}</h1>
         <p>Описание<br>{{u.about |truncatewords:30}}</p>
-        <p>характеристики<br>{{u.characters}}</p>
         <h2>{{u.price}}₽</h2>
         <a href="{%url 'techMarket:ShowUnit' u.id%}">Смотреть</a>
 
