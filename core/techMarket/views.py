@@ -8,6 +8,9 @@ from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic import UpdateView, DetailView
+from django.contrib.messages.views import SuccessMessageMixin
+from django.contrib.auth.views import PasswordChangeView
+
 # Create your views here.
 
 def index(request):
@@ -19,6 +22,9 @@ def index(request):
         'group':gr,
     }
     return render(request,'index.html',context)
+
+def about(request):
+    return render(request,'techMarket/about.html')
 
 def showCat(request,cat_id):
     gr = Group.objects.all()
@@ -92,9 +98,19 @@ class updunit(UpdateView):
 
     fields = ['title', 'about', 'characters', 'price', 'photo','cat']
 
-class updPass(UpdateView):
-    model = User
-    template_name = 'techMarket/updPass.html'
-    success_url = '/'
+class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
 
-    fields = ['password']
+    form_class = UserPasswordChangeForm
+    template_name = 'user_password_change.html'
+    success_message = 'Ваш пароль был успешно изменён!'
+
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Изменение пароля на сайте'
+        return context
+
+
+    def get_success_url(self):
+        return reverse_lazy('profile_detail', kwargs={'slug': self.request.user.profile.slug})

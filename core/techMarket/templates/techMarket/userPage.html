@@ -8,10 +8,12 @@
 
 </div>
 <div>
+    {%if request.user.profile.avatar.url%}
     <div><img src="{{request.user.profile.avatar.url}}"></div>
+    {%endif%}
     <h1>{{request.user.username}}</h1>
     <ul>
-<!--        <li><a href="{%url 'techMarket:updPass' request.user.id%}">Сменить пароль</a></li>-->
+        <li><a href="{%url 'techMarket:password_change'%}">сменить пароль</a></li>
         <li><a href="{%url 'techMarket:exit'%}">Выйти из аккаунта</a></li>
     </ul>
 </div>

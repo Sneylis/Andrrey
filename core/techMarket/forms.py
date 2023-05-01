@@ -2,30 +2,17 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Unit,Profile
-
-class UnitForm(forms.ModelForm):
-    class Meta:
-        model = Unit
-        fields = ['title','about','characters','price','photo','cat']
-        widjets = {
-            'title': forms.TextInput(attrs={'class': 'form-input'}),
-            'about': forms.Textarea(attrs={'class': 'form-input'}),
-            'characters': forms.Textarea(attrs={'class': 'form-input'}),
-        }
-
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ['avatar','birth']
-        widjets = {
-
-        }
+from django.contrib.auth.forms import SetPasswordForm
 
 
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from .models import Unit,Profile
+class UserPasswordChangeForm(SetPasswordForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs.update({
+                'class': 'form-control',
+                'autocomplete': 'off'
+            })
 
 class UnitForm(forms.ModelForm):
     class Meta:

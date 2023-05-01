@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{%load static%}
+
+
+{%block content%}
+<h1 class="h1register">Войти</h1>
+<form method="post">
+    {%csrf_token%}
+
+    {%for f in form %}
+    <p><label class="form_label" for="{{f.id_for_label}}">{{f.label}}: </label>{{f}}</p>
+    <div class="div_for_error">{{f.errors}}</div>
+
+    {%endfor%}
+
+    <button type="submit">войти</button>
+
+  <BR>
+  <a href="{%url 'techMarket:register'%}">Первый раз на сайте ?</a>
+
+</form>
+{%endblock%}

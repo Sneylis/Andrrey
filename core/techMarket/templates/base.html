@@ -12,7 +12,7 @@
     <ul class="top_bar_list">
         <dev class="menu"><a class="logo" href="{%url 'techMarket:index'%}"><img class="logo" src="{% static 'techMarket/img/logo.png' %}"></img></a></dev>
         <li><a href="{%url 'techMarket:index'%}">Каталог</a></li>
-        <li><a>О нас</a></li>           |
+        <li><a href="{%url 'techMarket:About'%}">О нас</a></li>           |
 
         {% if perms.unit%}
         <li><a href="{%url 'techMarket:addunit'%}">добавить товар</a></li>
