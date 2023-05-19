@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{%load static%}
+
+{%block title%}Мои Вопросы{%endblock%}
+
+{%block content%}
+
+
+{%for q in questions%}
+{%if message%}
+<p style="color:red">{{message}}</p>
+{%endif%}
+<h1>{{q.unit}}</h1>
+<h1>{{q.question}}</h1>
+<form action="{%url 'techMarket:AdminChoice' q.pk %}" method="POST">
+    {% csrf_token %}
+    <textarea name="choice" ></textarea>
+    <button type="submit">ответить</button>
+</form>
+{%endfor%}
+{%endblock%}

@@ -1,3 +1,6 @@
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required, permission_required
+from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
 from .models import *
 from django.core.paginator import Paginator
@@ -14,12 +17,13 @@ from django.contrib.auth.views import PasswordChangeView
 # Create your views here.
 
 def index(request):
+    uq = UserQueston.objects.filter(choice=None).count
     unit = Unit.objects.all()
     gr = Group.objects.all()
     paginator = Paginator(unit, 15)  # Show 25 contacts per page.
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-    return render(request, 'index.html', {'page_obj': page_obj,'group':gr})
+    return render(request, 'index.html', {'page_obj': page_obj,'group':gr,'Questions':uq})
 
 
 def about(request):
@@ -28,12 +32,28 @@ def about(request):
 def showCat(request,cat_id):
     gr = Group.objects.all()
     unit = Unit.objects.filter(cat_id=cat_id)
+    paginator = Paginator(unit, 15)  # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'unit': unit,
+        'page_obj': page_obj,
         'group': gr,
     }
     return render(request, 'index.html', context)
 
+def SGroup(request, group_id):
+    gr = Group.objects.all()
+    g = Group.objects.get(pk=group_id)
+    cat = Category.objects.filter(group=g)
+    unit = Unit.objects.filter(cat=cat)
+    paginator = Paginator(unit, 15)  # Show 25 contacts per page.
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    context = {
+        'page_obj': page_obj,
+        'group': gr,
+    }
+    return render(request, 'index.html', context)
 
 class register(DataMixin, CreateView):
     form_class = RegisterUserForm
@@ -44,29 +64,27 @@ class register(DataMixin, CreateView):
         context=super().get_context_data(**kwargs)
         return dict(list(context.items()))
 
-class login(DataMixin,LoginView):
-    form_class = AuthenticationForm
-    template_name = 'login.html'
-
-    def get_context_data(self, object_list=None, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return dict(list(context.items()))
-
-    def get_success_url(self):
-        return reverse_lazy('techMarket:index')
+def login_view(request):
+    form = LoginForm(request.POST or None)
+    if request.POST and form.is_valid():
+        user = form.login(request)
+        if user:
+            login(request, user)
+            return HttpResponseRedirect("login.html")# Redirect to a success page.
+    return render(request, 'login.html', {'login_form': form })
 
 def user_link (request):
     return render(request,'techMarket/userPage.html')
 
 def showUnit(request,unit_id):
     gr = Group.objects.all()
-    unit = Unit.objects.filter(pk=unit_id)
+    unit = Unit.objects.get(pk=unit_id)
     context = {
         'unit': unit,
         'group': gr,
     }
     return render(request, 'techMarket/Unit.html', context)
-
+@permission_required('unit.unit',raise_exception=True)
 def AddUnit(request):
     if request.method == 'POST':
         form = UnitForm(request.POST, request.FILES)
@@ -77,10 +95,10 @@ def AddUnit(request):
         form = UnitForm()
     return render(request, 'techMarket/addUnit.html', {'form': form})
 
-
+@permission_required('unit.delete_unit',raise_exception=True)
 def delunit(request,unit_id):
     if request.user.has_perm('unit.add_Unit'):
-        unit = Unit.objects.filter(pk=unit_id)
+        unit = Unit.objects.get(pk=unit_id)
         try:
             unit.delete()
             return redirect('techMarket:index')
@@ -115,14 +133,45 @@ class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
         return reverse_lazy('profile_detail', kwargs={'slug': self.request.user.profile.slug})
 
 
-def post_search(request):
-    if request.method == 'POST':
-        form = SearchForm(request.POST)
-        if form.is_valid():
-            u = Unit.objects.filter(title__icontains=form.cleaned_data['query'])
-    group = Group.objects.all()
-    form = SearchForm
-    paginator = Paginator(u, 5)
-    page_num = request.GET.get('page')
-    page_obj = paginator.get_page(page_num)
-    return render(request, 'library_home.html', {'form':form,'group': group, 'page_obj': page_obj})
+@login_required(login_url='techMarket:login')
+def GetQuestion(request,unit_id):
+    u = Unit.objects.get(pk=unit_id)
+    try:
+        question = request.POST['questions']
+        question = str(question)
+        user_q = UserQueston(user=request.user,question=question,unit=u)
+        user_q.save()
+        message = 'вопрос успешно отправлен, сататуса вопроса выможете просмотреть в вкладке Мои Вопросы'
+        return render(request,'techMarket/Unit.html',{'unit':u,'message':message})
+    except:
+        message = 'Заполните поля'
+        return render(request,'techMarket/Unit.html',{'unit':u,'message':message})
+@login_required(login_url='techMarket:login')
+def ShUserQuestion(request):
+    q = UserQueston.objects.filter(user=request.user)
+    g = Group.objects.all()
+    paginator = Paginator(q, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    return render(request, 'User_Questions.html', {'page_obj':page_obj,'group':g})
+
+def GetAsnwer(request):
+    u = UserQueston.objects.filter(choice=None)
+    return render(request,'GetAnswer.html',{'questions':u})
+
+def GetChiuce(request,pk):
+    p = UserQueston.objects.get(pk=pk)
+    u = UserQueston.objects.filter(choice=None)
+    try:
+        choice = request.POST['choice']
+        if choice != '' or choice !='' or choice == None:
+            p.choice = choice
+            p.save()
+            return redirect('techMarket:AdminQuestion')
+        else:
+            message = 'пожалуйста заполните поле'
+            return render(request, 'GetAnswer.html', {'questions': u, 'message': message})
+
+    except:
+        message = 'пожалуйста заполните поле'
+        return render(request,'GetAnswer.html',{'questions':u,'message':message})

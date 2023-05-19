@@ -90,3 +90,8 @@ body{
     border: 2px solid #dbd3bf;
     border-radius: 5px;
 }
+
+.question{
+    width:95%;
+    border-radius:10px;
+}

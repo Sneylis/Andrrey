@@ -3,20 +3,28 @@
 
 
 {%block content%}
-<h1 class="h1register">Войти</h1>
-<form method="post">
-    {%csrf_token%}
+{% if form.errors %}
+<p>Something is wrong</p>
+{% endif %}
 
-    {%for f in form %}
-    <p><label class="form_label" for="{{f.id_for_label}}">{{f.label}}: </label>{{f}}</p>
-    <div class="div_for_error">{{f.errors}}</div>
+{% if form.non_field_errors %}
+    <ul class='form-errors'>
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
 
-    {%endfor%}
+<form class="form-signin" action="{%url 'techMarket:login' %}" method="post">
+    <h2 class="form-signin-heading">Login</h2>
+    {% csrf_token %}
 
-    <button type="submit">войти</button>
+    <input class="input-block-level" type="text" name="email" value="" id="email" placeholder="Email">
 
-  <BR>
-  <a href="{%url 'techMarket:register'%}">Первый раз на сайте ?</a>
+    <input class="input-block-level" type="password" name="password" value="" id="username" placeholder="Password">
+
+    <button class="btn btn-large btn-primary" type="submit">Login</button>
+    <input type="hidden" name="next" value="{{next|escape}}" />
 
 </form>
 {%endblock%}

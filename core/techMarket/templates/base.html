@@ -13,13 +13,15 @@
         <a href="{%url 'techMarket:index'%}"><img class="logo" src="{% static 'techMarket/img/logo.png' %}"></a>
         <li><a href="{%url 'techMarket:index'%}">Каталог</a></li>
         <li><a  href="{%url 'techMarket:About'%}">О нас</a></li>           |
+        <li><a  href="{%url 'techMarket:UserQuestion'%}">Мои вопросы</a></li>           |
+
 
         {% if perms.unit%}
         <li><a href="{%url 'techMarket:addunit'%}">добавить товар</a></li>
         {%endif%}
 
         {% if user.is_authenticated%}
-        <li><a href="{%url 'techMarket:userLink' %}">Личный кабинет</a></li>
+
         {%else%}
         <div class="AuthBTNS">
                 <a class="reg" href="{%url 'techMarket:register'%}">Регистрация</a> <a class="log" href="{%url 'techMarket:login'%}">Войти</a>

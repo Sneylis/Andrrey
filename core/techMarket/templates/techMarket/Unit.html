@@ -24,15 +24,26 @@
 
 
 {%block content%}
-{%for u in unit%}
+
 <div>
-  <div><h1>{{u.title}}</h1></div>
-  <div><img src="{{u.photo.url}}"></div>
+  <div><h1>{{unit.title}}</h1></div>
+  <div><img src="{{unit.photo.url}}"></div>
   <div>
-    <h2>{{u.price}}</h2>
-    <p>{{u.about}}</p>
-    <p>{{u.characters}}</p>
+    <h2>{{unit.price}}</h2>
+    <p>{{unit.about}}</p>
+    <p>{{unit.characters}}</p>
   </div>
 </div>
-{%endfor%}
+
+<hr />
+{%if message%}
+<p style="color:red;">{{message}}</p>
+{%endif%}
+<form action="{%url 'techMarket:getQuestion' unit.pk%}", method="POST">
+    {% csrf_token %}
+    <h1>Задать вопрос для товара {{unit.title}}</h1>
+    <textarea name='questions' class='question'></textarea>
+    <br>
+    <button type="submit">задать вопрос</button>
+</form>
 {%endblock%}

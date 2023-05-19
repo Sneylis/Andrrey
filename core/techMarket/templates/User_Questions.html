@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{%load static%}
+
+{%block title%}Мои Вопросы{%endblock%}
+
+{%block aside%}
+
+{%if group%}
+    {%for g in group%}
+    <div>
+        <ul class="catalog">
+            <li><a><h1>{{g.gr}}</h1></a></li>
+            {%for c in g.category_set.all%}
+            <ul>
+            <li><a href="{%url 'techMarket:showCategory' c.id %}"><h2>{{c.cat}}</h2></a></li>
+            </ul>
+            {%endfor%}
+
+        </ul>
+
+    </div>
+    {%endfor%}
+{%endif%}
+{%endblock%}
+
+
+{%block content%}
+
+{% if page_obj %}
+    {%for q in page_obj%}
+    <div style="border: solid 3px gray">
+        <h1>Вопрос{{q.unit}}</h1>
+        <p>{{q.question}}</p>
+        {%if q.choice%}
+        <p> ответ:<br>{{q.choice}}</p>
+        {%else%}
+        <br>
+        <br>
+        <p>на ваш впорос ещё не ответили</p>
+         {%endif%}
+    </div>
+    {%endfor%}
+{%else%}
+<p>вы ещё не задавали вопросы, задать его можно в вкладке описания товара</p>
+{%endif%}
+
+<footer class="pagination">
+    <nav class="paginator">
+        <ul class="paginator">
+            {%for p in page_obj.paginator.page_range%}
+            <li>
+                <a href="?page={{p}}">{{p}}</a>
+            </li>
+            {%endfor%}
+        </ul>
+    </nav>
+</footer>
+
+{%endblock%}

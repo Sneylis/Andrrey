@@ -40,3 +40,10 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     avatar = models.ImageField(upload_to='avatars/')
     birth = models.DateField(auto_created=True)
+
+class UserQueston(models.Model):
+    user = models.ForeignKey(User,on_delete=models.DO_NOTHING)
+    unit = models.ForeignKey(Unit,on_delete=models.CASCADE)
+    question = models.TextField()
+    choice = models.CharField(max_length=100000,null=True)
+
