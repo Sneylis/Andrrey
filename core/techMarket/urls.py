@@ -13,7 +13,7 @@ urlpatterns = [
     path('addUnit/',views.AddUnit,name='addunit'),
     path('updUnit/<int:pk>/', views.updunit.as_view(), name='updUnit'),
     path('register/',views.register.as_view(),name='register'),
-    path('login/',views.login_view,name='login'),
+    path('login/',views.user_login,name='login'),
     path('Profile',views.user_link,name='userLink'),
     path('exit/',authViews.LogoutView.as_view(next_page='index'),name='exit'),
     path('about/',views.about,name='About'),

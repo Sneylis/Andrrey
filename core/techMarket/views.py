@@ -64,14 +64,25 @@ class register(DataMixin, CreateView):
         context=super().get_context_data(**kwargs)
         return dict(list(context.items()))
 
-def login_view(request):
-    form = LoginForm(request.POST or None)
-    if request.POST and form.is_valid():
-        user = form.login(request)
-        if user:
-            login(request, user)
-            return HttpResponseRedirect("login.html")# Redirect to a success page.
-    return render(request, 'login.html', {'login_form': form })
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+
+            user = authenticate(username=username, password=password)
+            if user and user.is_active:
+                login(request, user)
+                return redirect('techMarket:index')
+            else:
+                form.add_error(None, 'неверный логин или пароль')
+                return render(request, 'login.html', {'form': form})
+        else:
+            return render(request, 'login.html', {'form': form})
+    else:
+        return render(request, 'login.html', {'form': LoginForm()})
+
 
 def user_link (request):
     return render(request,'techMarket/userPage.html')
