@@ -1,26 +1,41 @@
 body{
-    background: #303030;
+    background: #f0faff;
+}
+a{
+    color:white;
+    text-decoration: none;
 }
 .top_bar {
     width: 100%;
-    background: #333333;
+    background: #1784b3;
     list-style-type: none;
     color:#EEEFEF;
     display: inline-block;
 }
-.top_bar_list > li{
+.top_bar_list li{
     display: inline-block;
-    padding-left: 40px;
+    padding-left: 70px;
 
 }
+.top_bar a {
+    text-decoration:none;
+}
+.top_bar a:hover{
+    color: orange;
+}
 
+.AuthBTNS{
+    float: right;
+    margin-right: 100px;
+    padding-left: 50px;
+}
 /*------------------------------------------------top_bar------------------------------------*/
 
 .main{
     margin: 0;
     padding: 0;
     position: relative;
-    background-color:#2B2B2C;
+    background-color:#f0faff;
 }
 
 .aside{
@@ -29,16 +44,16 @@ body{
     top: 0;
     width: 20%;
     margin: 0; padding: 0;
-    background: #303030;
+    background: #f0faff;
 }
 
 .content{
-    position: absolute;
-     right: 0;
-    top: 0;
-     width: 80%;
-     color:#EEEFEF;
-     background: #2B2B2C;
+    display:flex;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+     color:#252525;
+     background: #afd0de;!!!!!!!!!!!
 }
 
 .catalog > li,a,h1,h2{
@@ -46,21 +61,36 @@ body{
     color:#EEEFEF;
     font-size: 20px;
 }
+.catalog{
+    margin-top: 5px;
+    padding: 10px 0px 10px 10px;
+    background: #1784b3;
+}
+
 
 
 .unit{
-    width: 800px;
-    display: inline-flex;
-    padding-bottom: 30px;
-    border:5px solid #444241;
-    margin-right: auto;
+    border:2px solid #1784b3;
+    margin-left: 20px;
+    margin-top:10px;
 
 }
 
 .about{
     padding-left: 10px;
 }
-
+.about h1{
+    color:black;
+}
+.about h2{
+    color:black;
+}
+.about a{
+    color:black;
+}
+.about a:hover{
+    color:orange;
+}
 
 
 .updUnit{
@@ -94,4 +124,24 @@ body{
 .question{
     width:95%;
     border-radius:10px;
+}
+.paginator{
+    display: flex;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 10px;
+}
+.pagination a{
+    text-decoration: none;
+    color:white;
+    background:#1784b3;
+    border: 1px solid black;
+    padding: 3px 6px 3px 6px;
+
+}
+.pagination a:hover{
+    color:orange;
+}
+.pagination ul{
+    list-style-type: none;
 }
