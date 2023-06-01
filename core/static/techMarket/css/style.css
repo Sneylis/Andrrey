@@ -1,5 +1,5 @@
 body{
-    background: #303030;
+    background: red;
 }
 .top_bar {
     width: 100%;
@@ -12,6 +12,19 @@ body{
     display: inline-block;
     padding-left: 40px;
 
+}
+
+
+.authLog{
+    margin-left:auto;
+    margin-left:30%;
+    color:red;
+    background:red;
+
+}
+
+.authLog > p > label{
+    width:300px;
 }
 
 /*------------------------------------------------top_bar------------------------------------*/

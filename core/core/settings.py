@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'captcha',
     'techMarket.apps.TechmarketConfig',
     'django.contrib.admin',
     'django.contrib.auth',

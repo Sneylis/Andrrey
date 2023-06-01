@@ -21,7 +21,8 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('techMarket.urls'))
+    path('',include('techMarket.urls')),
+    path('captcha/', include('captcha.urls')),
 ]+ static(settings.STATIC_URL, document_roots=settings.STATIC_ROOT)
 
 if settings.DEBUG:

@@ -4,6 +4,7 @@ from django.contrib.auth import views as authViews
 from .views import UserPasswordChangeView
 app_name='techMarket'
 
+
 urlpatterns = [
     path('',views.index, name='index'),
     path('category/<int:cat_id>/',views.showCat,name='showCategory'),

@@ -3,6 +3,10 @@
 
 {%block title%}Каталог{%endblock%}
 
+<form action="{%url 'techMarket:index.html'%}" method="POST">
+    <input type="search", name="q", placeholder="поиск">
+</form>
+
 {%block aside%}
 {%if perms.unit %}
     {%if Questions%}

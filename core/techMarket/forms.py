@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from .models import Unit,Profile
 from django.contrib.auth.forms import SetPasswordForm
+from captcha.fields import CaptchaField
 
 class SearchForm(forms.Form):
     query = forms.CharField(label='поиск')
@@ -17,9 +18,14 @@ class UserPasswordChangeForm(SetPasswordForm):
                 'class': 'form-control',
                 'autocomplete': 'off'
             })
-class LoginUserForm(AuthenticationForm):
-    username = forms.CharField(label='Логин', widget=forms.TextInput(attrs={'class': 'form-input'}))
-    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
+class LoginForm(forms.Form):
+    username = forms.CharField(label=u'Имя пользователя')
+    password = forms.CharField(
+        label=("Пароль"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
+    )
+    next = forms.CharField(widget=forms.HiddenInput(), required=False)
 
 class UnitForm(forms.ModelForm):
     class Meta:
