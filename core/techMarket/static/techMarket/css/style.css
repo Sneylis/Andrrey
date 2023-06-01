@@ -1,5 +1,5 @@
 body{
-    background: #f0faff;
+    background: #a1a1a1;
 }
 a{
     color:white;
@@ -7,7 +7,7 @@ a{
 }
 .top_bar {
     width: 100%;
-    background: #1784b3;
+    background: #3d3d3d;
     list-style-type: none;
     color:#EEEFEF;
     display: inline-block;
@@ -35,7 +35,7 @@ a{
     margin: 0;
     padding: 0;
     position: relative;
-    background-color:#f0faff;
+    background-color:#a1a1a1;
 }
 
 .aside{
@@ -44,7 +44,7 @@ a{
     top: 0;
     width: 20%;
     margin: 0; padding: 0;
-    background: #f0faff;
+    background: #a1a1a1;
 }
 
 .content{
@@ -64,33 +64,43 @@ a{
 .catalog{
     margin-top: 5px;
     padding: 10px 0px 10px 10px;
-    background: #1784b3;
+    background: #3d3d3d;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 
 
 .unit{
-    border:2px solid #1784b3;
+    border:2px solid #3d3d3d;
     margin-left: 20px;
     margin-top:10px;
-    background:#AFD0DE;
+    background:#3d3d3d;
+    border-radius: 10px;
 
+}
+.ph{
+	margin-left: 20px;
+	margin-top: 10px;
 }
 
 .about{
     padding-left: 10px;
 }
 .about h1{
-    color:black;
+    color:white;
 }
 .about h2{
-    color:black;
+    color:white;
 }
 .about a{
-    color:black;
+    color:white;
 }
 .about a:hover{
     color:orange;
+}
+.about p {
+	color:white;
 }
 
 
@@ -133,10 +143,11 @@ a{
     margin-top: 10px;
 }
 .pagination a{
+	border-radius: 10px;
     text-decoration: none;
     color:white;
-    background:#1784b3;
-    border: 1px solid black;
+    background:#3d3d3d;
+    border: 1px solid #3d3d3d;
     padding: 3px 6px 3px 6px;
 
 }
@@ -145,4 +156,20 @@ a{
 }
 .pagination ul{
     list-style-type: none;
+}
+.logotop{
+	display: flex;
+	background: #0f0f0f;
+	margin-left: auto;
+	margin-right: auto; 
+}
+.logotopbar{
+	margin-left: auto;
+	margin-right: auto;
+}
+.body{
+	background:#a1a1a1;
+	width: 1920px;
+	margin-left: auto;
+	margin-right: auto;
 }

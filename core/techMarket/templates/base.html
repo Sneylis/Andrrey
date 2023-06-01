@@ -8,9 +8,12 @@
     <link rel="stylesheet" href="{% static 'techMarket/css/style.css' %}">
 </head>
 <body>
+    <div class="body">
+    <div class="logotop">
+       <a class="logotopbar" href="{%url 'techMarket:index'%}"><img class="logo" src="{% static 'techMarket/img/logo.png' %}"></a>
+    </div>   
 <div class="top_bar">
     <ul class="top_bar_list">
-        <a href="{%url 'techMarket:index'%}"><img class="logo" src="{% static 'techMarket/img/logo.png' %}"></a>
         <li><a href="{%url 'techMarket:index'%}">Каталог</a></li>
         <li><a  href="{%url 'techMarket:About'%}">О нас</a></li> 
         <li><a  href="{%url 'techMarket:UserQuestion'%}">Мои вопросы</a></li>
@@ -29,7 +32,6 @@
         {%endif%}
     </ul>
 </div>
-
 <div class="main">
     <div class="aside">
         {%block aside%}
@@ -53,6 +55,6 @@
         </ul>
     </nav>
 </footer>
-
+</div>
 </body>
 </html>
