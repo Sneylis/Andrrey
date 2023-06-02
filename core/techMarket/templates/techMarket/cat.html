@@ -7,9 +7,8 @@
 {%if perms.unit %}
 <div class="qu">
     {%if Questions%}
-        <p class="ts" style="color:red">нужно ответить на {{Questions}} вопросов</p>
+        <p style="color:red">нужно ответить на {{Questions}} вопросов</p>
         <a class="btn btn_a" href="{%url 'techMarket:AdminQuestion' %}">ответить на вопросы</a>
-        <hr>
     {%else%}
         <p class="q_stat" style="color:green">вопросов нет</p>
     {%endif%}

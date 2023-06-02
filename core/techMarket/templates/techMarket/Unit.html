@@ -4,6 +4,18 @@
 {%block title%}Каталог{%endblock%}
 
 {%block aside%}
+{%if perms.unit %}
+<div class="qu">
+    {%if Questions%}
+        <p class="ts" style="color:red">нужно ответить на {{Questions}} вопросов</p>
+        <a class="btn btn_a" href="{%url 'techMarket:AdminQuestion' %}">ответить на вопросы</a>
+        <hr>
+    {%else%}
+        <p class="q_stat" style="color:green">вопросов нет</p>
+    {%endif%}
+</div>
+{%endif%}
+
 {%if group%}
 {%for g in group%}
 <div>
@@ -11,27 +23,26 @@
         <li><a><h1>{{g.gr}}</h1></a></li>
         {%for c in g.category_set.all%}
         <ul>
-        <li><a href="{%url 'techMarket:showCategory' c.id %}"><h2>{{c.cat}}</h2></a></li>
+        <li><a  class="btn btn_a" href="{%url 'techMarket:showCategory' c.id %}">{{c.cat}}</a></li>
         </ul>
         {%endfor%}
-
     </ul>
-
 </div>
 {%endfor%}
 {%endif%}
 {%endblock%}
 
 
-{%block content%}
 
-<div>
-  <div><h1>{{unit.title}}</h1></div>
+{%block content%}
+<div class="div_units">
+<div class="Units">
+    <div class="title_u"><h1><b>{{unit.title}}</b></h1></div>
   <div><img src="{{unit.photo.url}}"></div>
   <div>
-    <h2>{{unit.price}}</h2>
-    <p>{{unit.about}}</p>
-    <p>{{unit.characters}}</p>
+    <h2>цена: {{unit.price}} Р</h2>
+    <p><b>ОПИСАНИЕ</b><br>{{unit.about}}</p>
+
   </div>
 </div>
 
@@ -44,6 +55,8 @@
     <h1>Задать вопрос для товара {{unit.title}}</h1>
     <textarea name='questions' class='question'></textarea>
     <br>
-    <button type="submit">задать вопрос</button>
+    <button class="btn btn_a" style="border:1px solid white" type="submit">задать вопрос</button>
 </form>
+</div>
 {%endblock%}
+

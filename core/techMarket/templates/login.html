@@ -3,17 +3,22 @@
 
 
 {%block content%}
-
+<div class="register">
 {% for error in form.non_field_errors %}
     <span class="error-message">{{ error }}</span>
 {% endfor %}
 <form class="authLog" id="login_form" method="post" action="{%url 'techMarket:login' %}">
-    <h1>Авторизация</h1>
+    <h1 class="h1register">Авторизация</h1>
     {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn_login">войти</button>
+    {%for f in form %}
+    <p><label class="form_label" for="{{f.id_for_label}}">{{f.label}}: </label>{{f}}</p>
+    <div class="div_for_error">{{f.errors}}</div>
+
+    {%endfor%}
+    <button class="btn btn_a" type="submit" class="btn btn_login">войти</button>
     <br>
     <br>
-    <p>Первый раз на сайте ? <a class="btn btn_reg" href="{%url 'techMarket:register'%}">Зарегистрируйтесь</a></p>
+    <p>Первый раз на сайте ? <a class="btn btn_a" class="btn btn_reg" href="{%url 'techMarket:register'%}">Зарегистрируйтесь</a></p>
 </form>
+</div>
 {%endblock%}

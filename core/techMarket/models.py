@@ -29,6 +29,10 @@ class Category(models.Model):
     def __str__(self):
         return self.cat
 
+    class Meta:
+        verbose_name = 'Категория'
+        verbose_name_plural = 'Категории'
+
 class Group(models.Model):
     gr = models.CharField(max_length=2000)
 

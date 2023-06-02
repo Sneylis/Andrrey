@@ -18,16 +18,10 @@ class UserPasswordChangeForm(SetPasswordForm):
                 'class': 'form-control',
                 'autocomplete': 'off'
             })
-class LoginForm(forms.Form):
-    username = forms.CharField(label=u'Имя пользователя')
-    password = forms.CharField(
-        label=("Пароль"),
-        strip=False,
-        widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
-    )
-    next = forms.CharField(widget=forms.HiddenInput(), required=False)
 
 class UnitForm(forms.ModelForm):
+
+
     class Meta:
         model = Unit
         fields = ['title','about','characters','price','photo','cat']
@@ -53,7 +47,7 @@ class RegisterUserForm(UserCreationForm):
     last_name = forms.CharField(label="Фамилия", widget=forms.TextInput(attrs={'class': 'form-input'}))
     password1 = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
     password2 = forms.CharField(label='Повтор пароля', widget=forms.PasswordInput(attrs={'class': 'form-input'}))
-
+    captcha = CaptchaField()
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
@@ -75,4 +69,4 @@ class LoginForm(forms.Form):
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
     )
-    next = forms.CharField(widget=forms.HiddenInput(), required=False)
+    captcha = CaptchaField()

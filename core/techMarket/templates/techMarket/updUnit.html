@@ -3,8 +3,8 @@
 
 
 {% block content %}
-
-<form class='add' action="{% url 'techMarket:updUnit' unit.id %}" method="post" enctype="multipart/form-data">                 <!--тут нужен дизайн дива, работает тк форма наследуеться, для дизайна полей я сделал тебе Form_label-->
+<div class="register updDiv">
+<form action="{% url 'techMarket:updUnit' unit.id %}" method="post" enctype="multipart/form-data">                 <!--тут нужен дизайн дива, работает тк форма наследуеться, для дизайна полей я сделал тебе Form_label-->
     {% csrf_token %}
 
     <div class="div_for_error">{{form.non_field_errors}}</div>
@@ -14,8 +14,8 @@
         <div class="div_for_error">{{f.errors}}</div>
     {%endfor%}
 
-    <button type="submit">сохранить</button>
+    <button class="btn btn_a" type="submit">сохранить</button>
 
 </form>
-
+</div>
 {% endblock %}

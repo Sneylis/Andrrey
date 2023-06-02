@@ -2,20 +2,51 @@
 {%load static%}
 
 {%block title%}Мои Вопросы{%endblock%}
+{%block aside%}
+{%if perms.unit %}
+<div class="qu">
+    {%if Questions%}
+        <p class="ts" style="color:red">нужно ответить на {{Questions}} вопросов</p>
+        <a class="btn btn_a" href="{%url 'techMarket:AdminQuestion' %}">ответить на вопросы</a>
+        <hr>
+    {%else%}
+        <p class="q_stat" style="color:green">вопросов нет</p>
+    {%endif%}
+</div>
+{%endif%}
+
+{%if group%}
+{%for g in group%}
+<div>
+    <ul class="catalog">
+        <li><a><h1>{{g.gr}}</h1></a></li>
+        {%for c in g.category_set.all%}
+        <ul>
+        <li><a  class="btn btn_a" href="{%url 'techMarket:showCategory' c.id %}">{{c.cat}}</a></li>
+        </ul>
+        {%endfor%}
+    </ul>
+</div>
+{%endfor%}
+{%endif%}
+{%endblock%}
+
 
 {%block content%}
 
 
 {%for q in questions%}
+<div class="answer">
 {%if message%}
 <p style="color:red">{{message}}</p>
 {%endif%}
 <h1>{{q.unit}}</h1>
-<h1>{{q.question}}</h1>
+    <div class="Ans" ><h1> Вопрос: {{q.question}}</h1></div>
 <form action="{%url 'techMarket:AdminChoice' q.pk %}" method="POST">
     {% csrf_token %}
-    <textarea name="choice" ></textarea>
-    <button type="submit">ответить</button>
+    <textarea class="Ans" name="choice" required="True"></textarea><br>
+    <button class="btn btn_a" type="submit">ответить</button>
 </form>
 {%endfor%}
+</div>
 {%endblock%}
