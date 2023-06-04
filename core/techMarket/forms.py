@@ -23,7 +23,7 @@ class UnitForm(forms.ModelForm):
     title = forms.CharField(label='Название')
     about = forms.CharField(label='Описание')
     price = forms.IntegerField(label='Цена')
-    characters = forms.CharField(label='Описание')
+    characters = forms.CharField(label='Характеристики')
     photo = forms.ImageField(label='фото')
 
     class Meta:
