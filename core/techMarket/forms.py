@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
-from .models import Unit,Profile
+from .models import Unit, Profile, Group, Category
 from django.contrib.auth.forms import SetPasswordForm
 from captcha.fields import CaptchaField
 
@@ -20,7 +20,11 @@ class UserPasswordChangeForm(SetPasswordForm):
             })
 
 class UnitForm(forms.ModelForm):
-
+    title = forms.CharField(label='Название')
+    about = forms.CharField(label='Описание')
+    price = forms.IntegerField(label='Цена')
+    characters = forms.CharField(label='Описание')
+    photo = forms.ImageField(label='фото')
 
     class Meta:
         model = Unit
@@ -60,7 +64,11 @@ class RegisterUserForm(UserCreationForm):
             'password2': forms.PasswordInput(attrs={'class': 'form-input'}),
         }
 
-
+    # def clean(self):
+    #     cleaned_data = super().clean(self)
+    #     if User.objects.filter(email=cleaned_data.get('email')).exists():
+    #         self.fields.add_error('email', "Эта почта уже зарегестрированна")
+    #     return cleaned_data
 
 class LoginForm(forms.Form):
     username = forms.CharField(label=u'Имя пользователя')
@@ -70,3 +78,17 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput(attrs={"autocomplete": "current-password"}),
     )
     captcha = CaptchaField()
+
+class GroupForm(forms.ModelForm):
+    gr = forms.CharField(label='Группа')
+
+    class Meta:
+        model = Group
+        fields = ['gr']
+
+class CatForm(forms.ModelForm):
+    cat = forms.CharField(label='Категория')
+
+    class Meta:
+        model = Category
+        fields = '__all__'

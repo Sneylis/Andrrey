@@ -25,6 +25,8 @@
 
         {% if perms.unit%}
         <li><a class="btn btn_a" href="{%url 'techMarket:addunit'%}">добавить товар</a></li>
+        <li><a class="btn btn_a" href="{%url 'techMarket:addGroup'%}">добавить группу</a></li>
+        <li><a class="btn btn_a" href="{%url 'techMarket:addCat'%}">добавить категорию</a></li>
         {%endif%}
         <div class="AuthBTNS">
         {% if user.is_authenticated%}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{%load static%}
+
+
+{% block content %}
+<div class="sds">
+<div class="register">
+<form  action="{% url 'techMarket:addGroup'%}" method="post" enctype="multipart/form-data">                 <!--тут нужен дизайн дива, работает тк форма наследуеться, для дизайна полей я сделал тебе Form_label-->
+    {% csrf_token %}
+
+    <div class="div_for_error">{{form.non_field_errors}}</div>
+
+    {% for f in form%}
+        <p><label class="form_label" for="{{f.id_for_label}}">{{f.label}}: </label>{{f}}</p>
+        <div class="div_for_error">{{f.errors}}</div>
+    {%endfor%}
+
+    <button class="btn btn_a" type="submit">Добавить</button>
+
+</form>
+</div>
+
+    <div class="div_g">
+        {%for g in group %}
+        <p><label class="sdsvv">{{g.gr}}</label> <a href="{%url 'techMarket:delGr' g.pk%}"><img class="img_del" src="{%static 'techMarket/img/del.png'%}"></a> <a class="updGener" href="{%url 'techMarket:updGroup' g.pk%}"><img class="img_del" src="{%static 'techMarket/img/upd.png'%}"></a></p>
+        {%endfor%}
+    </div>
+    </div>
+{% endblock %}
+
+{%block aside%}
+{%if perms.unit %}
+<div class="qu">
+    {%if Questions%}
+        <p class="ts" style="color:red">нужно ответить на {{Questions}} вопросов</p>
+        <a class="btn btn_a" href="{%url 'techMarket:AdminQuestion' %}">ответить на вопросы</a>
+        <hr>
+    {%else%}
+        <p class="q_stat" style="color:green">вопросов нет</p>
+    {%endif%}
+</div>
+{%endif%}
+
+{%if group%}
+{%for g in group%}
+<div>
+    <ul class="catalog">
+        <li><a><h1>{{g.gr}}</h1></a></li>
+        {%for c in g.category_set.all%}
+        <ul>
+        <li><a  class="btn btn_a" href="{%url 'techMarket:showCategory' c.id %}">{{c.cat}}</a></li>
+        </ul>
+        {%endfor%}
+    </ul>
+</div>
+{%endfor%}
+{%endif%}
+{%endblock%}

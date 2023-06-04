@@ -1,7 +1,8 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as authViews
-from .views import UserPasswordChangeView
+from .views import *
+
 app_name='techMarket'
 
 
@@ -22,6 +23,16 @@ urlpatterns = [
     path('question/<int:unit_id>/',views.GetQuestion,name='getQuestion'),
     path('MyQyestuion/',views.ShUserQuestion,name='UserQuestion'),
     path('GetQuestion/',views.GetAsnwer,name='AdminQuestion'),
-    path('GetChoice/<int:pk>',views.GetChiuce,name='AdminChoice')
+    path('GetChoice/<int:pk>',views.GetChiuce,name='AdminChoice'),
+
+    path('addGroup',views.AddGroup,name='addGroup'),
+    path('delGr/<int:pk>',views.delGr,name='delGr'),
+    path('updGr/<int:pk>',views.updGr.as_view(),name='updGroup'),
+
+    path('addCat/',views.AddCat,name='addCat'),
+    path('delCat/<int:pk>',views.delCat,name='delCat'),
+    path('updCat/<int:pk>',views.updCat.as_view(),name='updCat')
+
+
 
 ]

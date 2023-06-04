@@ -3,10 +3,11 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.db import transaction
 from django.http import HttpResponseRedirect
 from django.shortcuts import render,redirect
+from django.views import View
+
 from .models import *
 from django.core.paginator import Paginator
-from .utils import DataMixin
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 from .forms import *
 from django.urls import reverse_lazy
 from django.contrib.auth.views import LoginView
@@ -14,6 +15,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic import UpdateView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.views import PasswordChangeView
+
+from django.shortcuts import redirect
 
 # Create your views here.
 
@@ -78,12 +81,15 @@ def register(request):
          with transaction.atomic():
              if form.is_valid():
                  user = form.save()
-                 login(request,user)
+                 login(request, user)
+
                  return redirect('techMarket:index')
+
              else:
                  return render(request,'register.html',{'form':form})
     else:
         return render(request, 'register.html', {'form':RegisterUserForm()})
+
 
 def user_login(request):
     if request.method == 'POST':
@@ -135,6 +141,37 @@ def AddUnit(request):
         form = UnitForm()
     return render(request, 'techMarket/addUnit.html', {'form': form,'group': gr,'Questions':uq})
 
+@permission_required('unit.unit',raise_exception=True)
+def AddGroup(request):
+    gr = Group.objects.all()
+    uq = UserQueston.objects.filter(choice=None).count
+    if request.method == 'POST':
+        form = GroupForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('techMarket:addGroup')
+        else:
+            form = GroupForm()
+            return render(request, 'techMarket/addGroup.html', {'form': form,'group': gr,'Questions':uq})
+    else:
+        return render(request, 'techMarket/addGroup.html',{'form':GroupForm(),'group':gr,"Questions":uq})
+
+
+@permission_required('unit.unit',raise_exception=True)
+def AddCat(request):
+    gr = Group.objects.all()
+    uq = UserQueston.objects.filter(choice=None).count
+    c = Category.objects.all()
+    if request.method == 'POST':
+        form = CatForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('techMarket:addCat')
+        else:
+            form = GroupForm()
+            return render(request, 'techMarket/addCat.html', {'form': form,'group': gr,'Questions':uq,'cats':c})
+    else:
+        return render(request, 'techMarket/addCat.html',{'form':CatForm(),'group':gr,"Questions":uq,'cats':c})
 @permission_required('unit.delete_unit',raise_exception=True)
 def delunit(request,unit_id):
     if request.user.has_perm('unit.add_Unit'):
@@ -144,9 +181,35 @@ def delunit(request,unit_id):
             return redirect('techMarket:index')
         except:
             message="delete wasn't successful"
-        return render(request,'index.html',{'message':message})
+            return render(request,'index.html',{'message':message})
     else:
         return reverse_lazy('techMarket:index')
+
+@permission_required('unit.delete_unit',raise_exception=True)
+def delGr(request,pk):
+    if request.user.has_perm('unit.add_Unit'):
+        Gr = Group.objects.get(pk=pk)
+        try:
+            Gr.delete()
+            return redirect('/addGroup')
+        except:
+            message="Ошибка"
+            return render(request,'index.html',{'message':message})
+    else:
+        return redirect('techMarket:index')
+
+@permission_required('unit.delete_unit',raise_exception=True)
+def delCat(request,pk):
+    if request.user.has_perm('unit.add_Unit'):
+        C = Category.objects.get(pk=pk)
+        try:
+            C.delete()
+            return redirect('/addCat/')
+        except:
+            message="Ошибка"
+            return render(request,'index.html',{'message':message})
+    else:
+        return redirect('techMarket:index')
 
 class updunit(UpdateView):
     model = Unit
@@ -155,6 +218,20 @@ class updunit(UpdateView):
 
     fields = ['title', 'about', 'characters', 'price', 'photo','cat']
 
+
+class updGr(UpdateView):
+    model = Group
+    template_name = 'techMarket/updGroup.html'
+    success_url = '/addGroup'
+
+    fields = ['gr']
+
+class updCat(UpdateView):
+    model = Category
+    template_name = 'techMarket/updCat.html'
+    success_url = '/addCat/'
+
+    fields = ['cat', 'group']
 class UserPasswordChangeView(SuccessMessageMixin, PasswordChangeView):
 
     form_class = UserPasswordChangeForm

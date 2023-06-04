@@ -2,6 +2,8 @@ from django.db import models
 from PIL import Image
 from django.contrib.auth.models import User
 # Create your models here.
+from django.db import models
+
 
 class Unit(models.Model):
     title = models.CharField(max_length=2000)
@@ -50,4 +52,5 @@ class UserQueston(models.Model):
     unit = models.ForeignKey(Unit,on_delete=models.CASCADE)
     question = models.TextField()
     choice = models.CharField(max_length=100000,null=True)
+
 
